@@ -1,0 +1,20 @@
+pip install mkdocs-rtd-dropdown
+
+소스위치
+cd D:\project\hypersync\doc\HyperSync\md
+
+mkdocs serve --dev-addr=0.0.0.0:8000
+
+mkdocs build
+
+
+mkdocs gh-deploy
+
+git add .
+git commit -m "mkdocs upload"
+git push origin master
+
+https://thexen.github.io/HyperSync
+
+github.com
+thexen / !xen0110@

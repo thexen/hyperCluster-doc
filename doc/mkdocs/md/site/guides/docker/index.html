@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Kubernetes Configurations - HyperCluster</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Kubernetes Configurations";
+        var mkdocs_page_input_path = "guides\\docker.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> HyperCluster
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../intro/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../keyconc/">Key Concepts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../">User Guides</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api-syntax/">Syntax</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api-v0.6.0.0/">Version 0.6.0.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api-v0.6.1.0/">Version 0.6.1.0</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../explorer/">Explorer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../release-notes/">Release notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Tutorials</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">HyperCluster</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Kubernetes Configurations</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="kubernetes-configurations">Kubernetes Configurations</h1>
+<p><strong><em>Kubernets 설정 안내서</em></strong></p>
+<hr />
+<p><img alt="대체 텍스트" src="../../images/sync-001.png" /></p>
+<hr />
+<p>preference.yaml</p>
+<pre><code>...
+peers:
+peer1:
+    addr: 192.168.10.111:8080
+    volumes: 
+        repo-name1: volume-name1
+...
+</code></pre>
+<hr />
+<p>docker-compose.yaml  파일 설정</p>
+<p><code>/etc/hypercluster/artefacts/cert</code> 인증서 저장소 <br />
+<code>/etc/hypercluster/artefacts/onetimekey</code> onetime key 저장소 </p>
+<pre><code>version: '3.4'
+
+services:
+    hypercluster:
+    privileged: true
+    image: golang:1.14.4 
+    ports:
+    - 8080:8080
+    working_dir: /app
+environment:
+  - HYPERCLUSTER_PEER_HOSTNAME=peer1
+  - HYPERCLUSTER_PEER_PREFERENCE_FILE=/etc/hypercluster/conf.d/preference.yaml
+  - HYPERCLUSTER_PEER_LOG_PREFERENCE_FILE=/etc/hypercluster/conf.d/log.yaml
+volumes:
+  - /home/centos/docker/hypercluster/peer:/app
+  - /data:/data
+  - /home/centos/docker/hypercluster/peer/conf.d:/etc/hypercluster/conf.d
+  - /home/centos/docker/hypercluster/peer/artefacts:/etc/hypercluster/artefacts
+  - /var/log/hypercluster:/var/log/hypercluster
+
+#command: ./hypercluster start -hostname peer1 -conf /etc/hypercluster/conf.d/preference.yaml -log /etc/hypercluster/conf.d/log.yaml
+command: ./hypercluster start
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

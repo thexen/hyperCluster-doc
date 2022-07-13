@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>URI Query - HyperCluster</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "URI Query";
+        var mkdocs_page_input_path = "guides\\query.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> HyperCluster
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../intro/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../keyconc/">Key Concepts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../">User Guides</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../api-syntax/">Syntax</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api-v0.6.0.0/">Version 0.6.0.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../api-v0.6.1.0/">Version 0.6.1.0</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../explorer/">Explorer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../release-notes/">Release notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Tutorials</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">HyperCluster</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>URI Query</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="uri-query">URI Query</h1>
+<p><strong><em>URI Query 안내서</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>pretty                </p>
+</div>
+<p><strong><em>Request 결과를 가독성이 좋은 상태로 가공하여 출력합니다.</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>purge</p>
+</div>
+<p><strong><em>UPLOAD 또는 SYNC(PUSH) 할려는 파일이 대상 peer에 존재 한다면 저장이 완료 되는 시점에 최신파일 여부와 상관없이 swap을 합니다.</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>cluster</p>
+</div>
+<p><strong><em>Request 결과에 Cluster정보를 포함하여 출력합니다.</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>recursive</p>
+</div>
+<p><strong><em>FIND 명령에서 만 유효한 Query입니다. 검색하고자 하는 대상이 Directory인 경우 모든 하위 Direcectory의 정보를 출력합니다.</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>disclosure</p>
+</div>
+<p>role: <code>objectstorage</code><br />
+<strong><em>업로드 명령에서 discloure를 설정하여 업로들 하면 인증절차 없이 다운로드가 가능합니다.</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>validity</p>
+</div>
+<p>role: <code>objectstorage</code><br />
+<strong><em>content의 정보를 가져 올때 onetimekey도 함께 발급이 됩니다. 이때 발급된 onetimekey의 유효시간을 설정합니다.</em></strong>  </p>
+<pre><code>    #휴효시간을 10분으로 설정
+    validity=10m
+</code></pre>
+<hr />
+<div class="admonition note">
+<p>collection</p>
+</div>
+<p>role: <code>objectstorage</code><br />
+<strong><em>discloure 설정으로 업로드 된 content를 다운로드 할 때 사용되며, content의 개시자를 의미 합니다.</em></strong></p>
+<hr />
+<div class="admonition note">
+<p>key</p>
+</div>
+<p>role: <code>restapi</code><br />
+<strong><em>metadata의 정보들 중에서 prefix와 key가 일치하는 목록을 가져올때 사용 됩니다.</em></strong></p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

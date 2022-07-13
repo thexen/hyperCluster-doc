@@ -1,0 +1,23 @@
+site_name: HyperCluster
+theme: readthedocs
+markdown_extensions:
+  - toc:
+    permalink: "#"
+    baselevel: 1
+    separator: "_"
+markdown_extensions:
+  - admonition
+nav:
+  - Introduction: intro.md
+  - Key Concepts: keyconc.md
+  - User Guides: guides/index.md
+  - API:
+    - 'Syntax': 'guides/api-syntax.md'
+    - 'Version 0.6.0.0': 'guides/api-v0.6.0.0.md'
+    - 'Version 0.6.1.0': 'guides/api-v0.6.1.0.md'
+  - Glossary: glossary.md
+  - Explorer: explorer.md
+  - Release notes: release-notes.md
+  - License: license.md
+  - Tutorials: tutorials/index.md
+
