@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Synchronization API - HyperCluster</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Synchronization API";
+        var mkdocs_page_input_path = "tutorials\\sync.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> HyperCluster
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../intro/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../keyconc/">Key Concepts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../guides/">User Guides</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guides/api-syntax/">Syntax</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guides/api-v0.6.0.0/">Version 0.6.0.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../guides/api-v0.6.1.0/">Version 0.6.1.0</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../explorer/">Explorer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../release-notes/">Release notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../license/">License</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../">Tutorials</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">HyperCluster</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Synchronization API</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="synchronization-api">Synchronization API</h1>
+<p><strong><em>본 Tutorial은 API 사용 방법을 포함합니다.</em></strong></p>
+<p><a href="../replica/">[Setting up an Replica On Single-Host]</a>에서 설명 했던 <strong>Cluster</strong> 구성으로 Tutorial을 진행합니다.</p>
+<hr />
+<h2 id="api">API 사용방법</h2>
+<div class="admonition tip">
+<p>우리는 API 호출을 위해 <strong><em>Chrome Talend API Test Tool</em></strong>을 사용 할 것입니다.  <br />
+그리고 HTTP Request와 Request 결과 JSON만을 제공 할 것이고
+업로드 API 사용방법만 화면 캡쳐를 포함하여 제공합니다.</p>
+</div>
+<hr />
+<h2 id="_1">업로드</h2>
+<h5 id="peer-volume">업로드 전 peer volume 확인</h5>
+<p>그림을 보면 모든 <code>peer</code>의 <code>volume</code>은 파일이 없는 상태입니다.</p>
+<p><img alt="업로드전" src="../../images/upload-001.png" /></p>
+<h5 id="_2">업로드 요청</h5>
+<p>20bytes 크기의 1.txt 파일을 업로드 합니다.</p>
+<div class="admonition tip">
+<p>Upload API</p>
+</div>
+<pre><code>PUT /replica-name1/1.txt?pretty&amp;cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+Content-Length: 20
+
+12345678901234567890
+</code></pre>
+<div class="admonition danger">
+<p>Chrome의 Talend API Test 툴을 사용하여 업로드 합니다.  <br />
+uri query에 pretty를 추가 하시면 가독성이 좋은 JSON으로 응답을 받을 수 있습니다.</p>
+</div>
+<p><img alt="업로드 " src="../../images/upload-000.png" /></p>
+<div class="admonition danger">
+<p><strong><em>Chrome Talend API Test Tool</em></strong>를 이용한 파일 업로드 방법은 아래 그림과 같이    <br />
+좌측 영역 HEADERS에서 <code>Content-Length</code>를 삭제하고 우측 BODY영역에서 File을 선택하면 파일 업로드가 가능합니다.     </p>
+</div>
+<p><img alt="업로드 " src="../../images/upload-004.png" /></p>
+<h5 id="_3">업로드 결과</h5>
+<p><code>peer</code>의 <code>volume</code>에서 20bytes의 1.txt를 확인합니다.</p>
+<p><img alt="업로드 결과 " src="../../images/upload-002.png" /></p>
+<p>업로드 요청 결과는 아래 JSON과 같이 <strong><em>Chrome Talend API Test Tool</em></strong>에서 확인 가능합니다.</p>
+<pre><code>{
+  &quot;tx&quot;: &quot;1230c013-6076-4297-bfd0-4af08057d8d3&quot;,
+  &quot;code&quot;: 200,
+  &quot;Succeeded&quot;: 4,
+  &quot;Failed&quot;: 0,
+  &quot;results&quot;: [
+    {
+      &quot;command&quot;: &quot;upload&quot;,
+      &quot;tx&quot;: &quot;1230c013-6076-4297-bfd0-4af08057d8d3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname2&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 20,
+        &quot;time&quot;: &quot;Tue,  4 Aug 2020 12:39:55 GMT&quot;,
+        &quot;time_taken&quot;: &quot;9.9731ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;upload&quot;,
+      &quot;tx&quot;: &quot;1230c013-6076-4297-bfd0-4af08057d8d3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname3&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 20,
+        &quot;time&quot;: &quot;Tue,  4 Aug 2020 12:39:55 GMT&quot;,
+        &quot;time_taken&quot;: &quot;8.9733ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;upload&quot;,
+      &quot;tx&quot;: &quot;1230c013-6076-4297-bfd0-4af08057d8d3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname1&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname3&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 20,
+        &quot;time&quot;: &quot;Tue,  4 Aug 2020 12:39:55 GMT&quot;,
+        &quot;time_taken&quot;: &quot;11.9689ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;upload&quot;,
+      &quot;tx&quot;: &quot;1230c013-6076-4297-bfd0-4af08057d8d3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname0&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname1,hostname2&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 20,
+        &quot;time&quot;: &quot;Tue,  4 Aug 2020 12:39:55 GMT&quot;,
+        &quot;time_taken&quot;: &quot;16.9555ms&quot;
+      },
+      &quot;response&quot;: null
+    }
+  ]
+}
+</code></pre>
+<div class="admonition tip">
+<p><strong><em>결과 필드 설명</em></strong>    </p>
+</div>
+<ul>
+<li>
+<p>요청 처리 결과 집계  <br />
+<code>tx</code>: transaction id  <br />
+<code>code</code>: http code  <br />
+<code>Succeeded</code>: 성공 수 <br />
+<code>Failed</code>: 실패 수    </p>
+</li>
+<li>
+<p>요청 처리 결과   <br />
+<code>results[].command</code>: request 명령  <br />
+<code>results[].tx</code>: transaction id   <br />
+<code>results[].code</code>: http code  <br />
+<code>results[].host</code>: peer의 hostname  <br />
+<code>results[].result</code>: request 명령 처리 결과   <br />
+<code>results[].reason.error</code>: request 명령 처리 결과 실패 원인  <br />
+<code>results[].reason.where</code>: request 명령 처리 결과 실패 위치    </p>
+</li>
+<li>
+<p>cluster 정보  <br />
+<code>results[].cluster.cluster_name</code>: named-cluster  <br />
+<code>results[].cluster.cluster_role</code>: cluster 역할  <br />
+<code>results[].cluster.peers</code>: cluster에 참여한 peer  <br />
+<code>results[].cluster.peers_count</code>: cluster에 참여한 peer 수   <br />
+<code>results[].cluster.lead_peer</code>: lead peer  <br />
+<code>results[].cluster.child_peers</code>: child peer    </p>
+</li>
+<li>
+<p>request 정보  <br />
+<code>results[].request.user</code>: 사용자  <br />
+<code>results[].request.uri</code>: uri 정보  <br />
+<code>results[].request.query</code>: uri query 정보  <br />
+<code>results[].request.srcuri</code>: 요청한 http header의 source uri 정보  <br />
+<code>results[].request.range</code>: 요청한 http header의 range 정보    </p>
+</li>
+<li>
+<p>통계  <br />
+<code>results[].stat.trans_amount</code>: 전송량  <br />
+<code>results[].stat.time</code>: 요청 처리 시작 시간  <br />
+<code>results[].stat.time_taken</code>: 요청 처리에 걸린 시간    </p>
+</li>
+<li>
+<p>추가 정보  <br />
+<code>results[].response</code>: request 처리 결과의 추가 정보     </p>
+</li>
+</ul>
+<hr />
+<h2 id="_4">폴더 만들기</h2>
+<h5 id="_5">폴더 만들기 요청</h5>
+<p><strong>새 폴더</strong>를 만들겠습니다.  <br />
+요청 한 <code>uri</code>가 Directory라고 <code>peer</code>가 인식하기 위해서는 <code>uri</code>의 마지막은 <code>/</code>으로 끝나야 합니다.
+<code>/</code>으로 끝나지 않으면 파일로 생성됩니다.</p>
+<div class="admonition tip">
+<p>Create Directory API</p>
+</div>
+<pre><code>PUT /replica-name1/새 폴더/?pretty&amp;cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+</code></pre>
+<h5 id="_6">폴더 만들기 결과</h5>
+<pre><code>{
+  &quot;tx&quot;: &quot;656e5d1b-be3a-4341-b7ab-d04fedd836b3&quot;,
+  &quot;code&quot;: 200,
+  &quot;Succeeded&quot;: 4,
+  &quot;Failed&quot;: 0,
+  &quot;results&quot;: [
+    {
+      &quot;command&quot;: &quot;mkdir&quot;,
+      &quot;tx&quot;: &quot;656e5d1b-be3a-4341-b7ab-d04fedd836b3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname2&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:18:52 GMT&quot;,
+        &quot;time_taken&quot;: &quot;995.3µs&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;mkdir&quot;,
+      &quot;tx&quot;: &quot;656e5d1b-be3a-4341-b7ab-d04fedd836b3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname3&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:18:52 GMT&quot;,
+        &quot;time_taken&quot;: &quot;1.9938ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;mkdir&quot;,
+      &quot;tx&quot;: &quot;656e5d1b-be3a-4341-b7ab-d04fedd836b3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname1&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:18:52 GMT&quot;,
+        &quot;time_taken&quot;: &quot;1.9938ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;mkdir&quot;,
+      &quot;tx&quot;: &quot;656e5d1b-be3a-4341-b7ab-d04fedd836b3&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname0&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname1,hostname2,hostname3&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:18:52 GMT&quot;,
+        &quot;time_taken&quot;: &quot;6.9818ms&quot;
+      },
+      &quot;response&quot;: null
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h2 id="_7">복사하기</h2>
+<h5 id="_8">복사하기 요청</h5>
+<p><strong>/1.txt</strong> 파일을 <strong>/새 폴더/1.txt</strong>로 복사합니다.</p>
+<div class="admonition tip">
+<p>Copy API</p>
+</div>
+<pre><code>PUT /replica-name1/새 폴더/1.txt?pretty&amp;cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+X-Hyper-Copy-Source: /replica-name1/1.txt
+</code></pre>
+<h5 id="_9">복사하기 결과</h5>
+<pre><code>{
+  &quot;tx&quot;: &quot;9a855db3-bddd-47d7-aab0-302bc64a48dc&quot;,
+  &quot;code&quot;: 200,
+  &quot;Succeeded&quot;: 4,
+  &quot;Failed&quot;: 0,
+  &quot;results&quot;: [
+    {
+      &quot;command&quot;: &quot;copy&quot;,
+      &quot;tx&quot;: &quot;9a855db3-bddd-47d7-aab0-302bc64a48dc&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname1&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:37:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;125.2044ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;copy&quot;,
+      &quot;tx&quot;: &quot;9a855db3-bddd-47d7-aab0-302bc64a48dc&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname3&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:37:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;125.2066ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;copy&quot;,
+      &quot;tx&quot;: &quot;9a855db3-bddd-47d7-aab0-302bc64a48dc&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname2&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:37:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;151.8515ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;copy&quot;,
+      &quot;tx&quot;: &quot;9a855db3-bddd-47d7-aab0-302bc64a48dc&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname0&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname1,hostname2,hostname3&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/새 폴더/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 14:37:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;154.8079ms&quot;
+      },
+      &quot;response&quot;: null
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h2 id="_10">이름 바꾸기</h2>
+<h5 id="_11">이름 바꾸기 요청</h5>
+<p><strong>/새 폴더/1.txt</strong>를 <strong>/2.txt</strong>로 폴더 이동과 이름 바꾸기를 하겠습니다.
+그리고 지금 부터<code>perrty query</code>를 생략 하겠습니다.</p>
+<div class="admonition tip">
+<p>Rename API</p>
+</div>
+<pre><code>PUT /replica-name1/2.txt?cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+X-Hyper-Rename-Source: /replica-name1/%EC%83%88%20%ED%8F%B4%EB%8D%94/1.txt
+</code></pre>
+<h5 id="_12">이름 바꾸기 결과</h5>
+<pre><code>{&quot;tx&quot;:&quot;0010e66f-00dd-437d-bafe-ba4c3912fc89&quot;,&quot;code&quot;:200,&quot;Succeeded&quot;:4,&quot;Failed&quot;:0,&quot;results&quot;:[{&quot;command&quot;:&quot;rename&quot;,&quot;tx&quot;:&quot;0010e66f-00dd-437d-bafe-ba4c3912fc89&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname1&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;/replica-name1/새 폴더/1.txt&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:08:54 GMT&quot;,&quot;time_taken&quot;:&quot;996µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;rename&quot;,&quot;tx&quot;:&quot;0010e66f-00dd-437d-bafe-ba4c3912fc89&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname2&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;/replica-name1/새 폴더/1.txt&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:08:54 GMT&quot;,&quot;time_taken&quot;:&quot;0s&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;rename&quot;,&quot;tx&quot;:&quot;0010e66f-00dd-437d-bafe-ba4c3912fc89&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname3&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;/replica-name1/새 폴더/1.txt&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:08:54 GMT&quot;,&quot;time_taken&quot;:&quot;997.8µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;rename&quot;,&quot;tx&quot;:&quot;0010e66f-00dd-437d-bafe-ba4c3912fc89&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname0&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;hostname1,hostname2,hostname3&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;/replica-name1/새 폴더/1.txt&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:08:54 GMT&quot;,&quot;time_taken&quot;:&quot;1.9938ms&quot;},&quot;response&quot;:null}]}
+</code></pre>
+<hr />
+<h2 id="_13">파일 수정 시간 변경</h2>
+<h5 id="_14">파일 수정 시간 변경 요청</h5>
+<p><strong>/1.txt</strong>파일의 수정 시간을 <strong>2020/08/02 16:28:00</strong> 으로 변경 하겠습니다.</p>
+<div class="admonition tip">
+<p>Change Modified Time API</p>
+</div>
+<pre><code>PUT /replica-name1/1.txt?cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+X-Hyper-Set-Filetime: Sun, 02 Aug 2020 07:28:00 GMT
+</code></pre>
+<h5 id="_15">파일 수정 시간 변경 결과</h5>
+<pre><code>{&quot;tx&quot;:&quot;38006e96-5705-4e2b-b2e5-686a81abf361&quot;,&quot;code&quot;:200,&quot;Succeeded&quot;:4,&quot;Failed&quot;:0,&quot;results&quot;:[{&quot;command&quot;:&quot;setfiletime&quot;,&quot;tx&quot;:&quot;38006e96-5705-4e2b-b2e5-686a81abf361&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname1&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/1.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:17:32 GMT&quot;,&quot;time_taken&quot;:&quot;997.4µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;setfiletime&quot;,&quot;tx&quot;:&quot;38006e96-5705-4e2b-b2e5-686a81abf361&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname2&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/1.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:17:32 GMT&quot;,&quot;time_taken&quot;:&quot;998.1µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;setfiletime&quot;,&quot;tx&quot;:&quot;38006e96-5705-4e2b-b2e5-686a81abf361&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname3&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/1.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:17:32 GMT&quot;,&quot;time_taken&quot;:&quot;998.1µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;setfiletime&quot;,&quot;tx&quot;:&quot;38006e96-5705-4e2b-b2e5-686a81abf361&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname0&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;hostname1,hostname2,hostname3&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/1.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:17:32 GMT&quot;,&quot;time_taken&quot;:&quot;1.9955ms&quot;},&quot;response&quot;:null}]}
+</code></pre>
+<hr />
+<h2 id="_16">삭제 하기</h2>
+<h5 id="_17">삭제 요청</h5>
+<p><strong>/2.txt</strong>파일을 삭제 하겠습니다</p>
+<div class="admonition tip">
+<p>Delete API</p>
+</div>
+<pre><code>DELETE /replica-name1/2.txt?cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+</code></pre>
+<h5 id="_18">삭제 결과</h5>
+<pre><code>{&quot;tx&quot;:&quot;a9c82470-42fe-4747-9d95-1ee0609ac3c7&quot;,&quot;code&quot;:200,&quot;Succeeded&quot;:4,&quot;Failed&quot;:0,&quot;results&quot;:[{&quot;command&quot;:&quot;remove&quot;,&quot;tx&quot;:&quot;a9c82470-42fe-4747-9d95-1ee0609ac3c7&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname1&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:23:05 GMT&quot;,&quot;time_taken&quot;:&quot;0s&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;remove&quot;,&quot;tx&quot;:&quot;a9c82470-42fe-4747-9d95-1ee0609ac3c7&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname2&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:23:05 GMT&quot;,&quot;time_taken&quot;:&quot;999.4µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;remove&quot;,&quot;tx&quot;:&quot;a9c82470-42fe-4747-9d95-1ee0609ac3c7&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname3&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:23:05 GMT&quot;,&quot;time_taken&quot;:&quot;999.4µs&quot;},&quot;response&quot;:null},{&quot;command&quot;:&quot;remove&quot;,&quot;tx&quot;:&quot;a9c82470-42fe-4747-9d95-1ee0609ac3c7&quot;,&quot;code&quot;:200,&quot;host&quot;:&quot;hostname0&quot;,&quot;result&quot;:&quot;succeeded&quot;,&quot;reason&quot;:{&quot;error&quot;:&quot;&quot;,&quot;where&quot;:&quot;&quot;},&quot;cluster&quot;:{&quot;cluster_name&quot;:&quot;replica-name1&quot;,&quot;cluster_role&quot;:&quot;replica&quot;,&quot;peers&quot;:&quot;hostname0,hostname1,hostname2,hostname3&quot;,&quot;peers_count&quot;:4,&quot;lead_peer&quot;:&quot;hostname0&quot;,&quot;child_peers&quot;:&quot;hostname1,hostname2,hostname3&quot;},&quot;request&quot;:{&quot;user&quot;:&quot;admin&quot;,&quot;uri&quot;:&quot;/replica-name1/2.txt&quot;,&quot;query&quot;:&quot;&quot;,&quot;srcuri&quot;:&quot;&quot;,&quot;range&quot;:&quot;&quot;},&quot;stat&quot;:{&quot;trans_amount&quot;:0,&quot;time&quot;:&quot;Thu,  6 Aug 2020 15:23:05 GMT&quot;,&quot;time_taken&quot;:&quot;2.9919ms&quot;},&quot;response&quot;:null}]}
+</code></pre>
+<hr />
+<h2 id="_19">검색 하기</h2>
+<h5 id="_20">검색 요청</h5>
+<p><code>cluster</code>에 참여한 모든 <code>peer</code>에서 <strong>/1.txt</strong>파일을 검색하고 정보를 출력합니다.
+검색하고자 하는 대상이 <strong>Directory</strong>라면 <code>recursive</code> <strong>query</strong>를 사용 할 수 있습니다.</p>
+<div class="admonition tip">
+<p>Find API</p>
+</div>
+<pre><code>FIND /replica-name1/1.txt?pretty&amp;cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+</code></pre>
+<h5 id="_21">검색 결과</h5>
+<pre><code>{
+  &quot;tx&quot;: &quot;2c1b860f-52a3-4656-a914-5b91fe6cd371&quot;,
+  &quot;code&quot;: 200,
+  &quot;Succeeded&quot;: 4,
+  &quot;Failed&quot;: 0,
+  &quot;results&quot;: [
+    {
+      &quot;command&quot;: &quot;find&quot;,
+      &quot;tx&quot;: &quot;2c1b860f-52a3-4656-a914-5b91fe6cd371&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname1&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:28:57 GMT&quot;,
+        &quot;time_taken&quot;: &quot;0s&quot;
+      },
+      &quot;response&quot;: [
+        {
+          &quot;uri&quot;: &quot;/1.txt&quot;,
+          &quot;attr&quot;: &quot;file&quot;,
+          &quot;directorycnt&quot;: 0,
+          &quot;filecnt&quot;: 1,
+          &quot;filesize&quot;: 20,
+          &quot;hash&quot;: &quot;c971acdb2e5180618d6fab0ac05255a26bd992444cec7e99db0338333d2170ea&quot;,
+          &quot;modified&quot;: &quot;Sun,  2 Aug 2020 07:28:00 GMT&quot;
+        }
+      ]
+    },
+    {
+      &quot;command&quot;: &quot;find&quot;,
+      &quot;tx&quot;: &quot;2c1b860f-52a3-4656-a914-5b91fe6cd371&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname2&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:28:57 GMT&quot;,
+        &quot;time_taken&quot;: &quot;998.1µs&quot;
+      },
+      &quot;response&quot;: [
+        {
+          &quot;uri&quot;: &quot;/1.txt&quot;,
+          &quot;attr&quot;: &quot;file&quot;,
+          &quot;directorycnt&quot;: 0,
+          &quot;filecnt&quot;: 1,
+          &quot;filesize&quot;: 20,
+          &quot;hash&quot;: &quot;c971acdb2e5180618d6fab0ac05255a26bd992444cec7e99db0338333d2170ea&quot;,
+          &quot;modified&quot;: &quot;Sun,  2 Aug 2020 07:28:00 GMT&quot;
+        }
+      ]
+    },
+    {
+      &quot;command&quot;: &quot;find&quot;,
+      &quot;tx&quot;: &quot;2c1b860f-52a3-4656-a914-5b91fe6cd371&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname3&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:28:57 GMT&quot;,
+        &quot;time_taken&quot;: &quot;998.1µs&quot;
+      },
+      &quot;response&quot;: [
+        {
+          &quot;uri&quot;: &quot;/1.txt&quot;,
+          &quot;attr&quot;: &quot;file&quot;,
+          &quot;directorycnt&quot;: 0,
+          &quot;filecnt&quot;: 1,
+          &quot;filesize&quot;: 20,
+          &quot;hash&quot;: &quot;c971acdb2e5180618d6fab0ac05255a26bd992444cec7e99db0338333d2170ea&quot;,
+          &quot;modified&quot;: &quot;Sun,  2 Aug 2020 07:28:00 GMT&quot;
+        }
+      ]
+    },
+    {
+      &quot;command&quot;: &quot;find&quot;,
+      &quot;tx&quot;: &quot;2c1b860f-52a3-4656-a914-5b91fe6cd371&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname0&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname1,hostname2,hostname3&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/1.txt&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 0,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:28:57 GMT&quot;,
+        &quot;time_taken&quot;: &quot;2.993ms&quot;
+      },
+      &quot;response&quot;: [
+        {
+          &quot;uri&quot;: &quot;/1.txt&quot;,
+          &quot;attr&quot;: &quot;file&quot;,
+          &quot;directorycnt&quot;: 0,
+          &quot;filecnt&quot;: 1,
+          &quot;filesize&quot;: 20,
+          &quot;hash&quot;: &quot;c971acdb2e5180618d6fab0ac05255a26bd992444cec7e99db0338333d2170ea&quot;,
+          &quot;modified&quot;: &quot;Sun,  2 Aug 2020 07:28:00 GMT&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h2 id="peer-push">모든 peer를 대상으로 PUSH 하기</h2>
+<h5 id="sync">Sync 요청</h5>
+<p><code>sync</code>동작 시연을 위해 <code>peer</code> <strong>hostname0</strong>의 <code>/</code>에 임의의 파일을 복사합니다. <br />
+필자는 <strong>server001.png</strong> 파일을 복사하였습니다. 그리고 <strong>server001.png</strong>파일을 모든 <code>peer</code>에게 <code>push</code>합니다.</p>
+<div class="admonition tip">
+<p>Sync API</p>
+</div>
+<pre><code>SYNC /replica-name1/server001.png?pretty&amp;cluster HTTP/1.1
+Host: 127.0.0.1:8080
+Connection: Close
+Authorization: Basic YWRtaW46YWRtaW4=
+</code></pre>
+<h5 id="sync_1">Sync 결과</h5>
+<pre><code>{
+  &quot;tx&quot;: &quot;8361e394-29ca-47bd-8713-7691ed404e9e&quot;,
+  &quot;code&quot;: 200,
+  &quot;Succeeded&quot;: 4,
+  &quot;Failed&quot;: 0,
+  &quot;results&quot;: [
+    {
+      &quot;command&quot;: &quot;sync&quot;,
+      &quot;tx&quot;: &quot;8361e394-29ca-47bd-8713-7691ed404e9e&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname2&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/server001.png&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 1123,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:41:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;1.9935ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;sync&quot;,
+      &quot;tx&quot;: &quot;8361e394-29ca-47bd-8713-7691ed404e9e&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname3&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/server001.png&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 1123,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:41:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;996.4µs&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;sync&quot;,
+      &quot;tx&quot;: &quot;8361e394-29ca-47bd-8713-7691ed404e9e&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname1&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname2,hostname3&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/server001.png&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 1123,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:41:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;3.9909ms&quot;
+      },
+      &quot;response&quot;: null
+    },
+    {
+      &quot;command&quot;: &quot;sync&quot;,
+      &quot;tx&quot;: &quot;8361e394-29ca-47bd-8713-7691ed404e9e&quot;,
+      &quot;code&quot;: 200,
+      &quot;host&quot;: &quot;hostname0&quot;,
+      &quot;result&quot;: &quot;succeeded&quot;,
+      &quot;reason&quot;: {
+        &quot;error&quot;: &quot;&quot;,
+        &quot;where&quot;: &quot;&quot;
+      },
+      &quot;cluster&quot;: {
+        &quot;cluster_name&quot;: &quot;replica-name1&quot;,
+        &quot;cluster_role&quot;: &quot;replica&quot;,
+        &quot;peers&quot;: &quot;hostname0,hostname1,hostname2,hostname3&quot;,
+        &quot;peers_count&quot;: 4,
+        &quot;lead_peer&quot;: &quot;hostname0&quot;,
+        &quot;child_peers&quot;: &quot;hostname1&quot;
+      },
+      &quot;request&quot;: {
+        &quot;user&quot;: &quot;admin&quot;,
+        &quot;uri&quot;: &quot;/replica-name1/server001.png&quot;,
+        &quot;query&quot;: &quot;pretty&quot;,
+        &quot;srcuri&quot;: &quot;&quot;,
+        &quot;range&quot;: &quot;&quot;
+      },
+      &quot;stat&quot;: {
+        &quot;trans_amount&quot;: 1123,
+        &quot;time&quot;: &quot;Thu,  6 Aug 2020 15:41:34 GMT&quot;,
+        &quot;time_taken&quot;: &quot;5.9838ms&quot;
+      },
+      &quot;response&quot;: null
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h2 id="1">과제1</h2>
+<div class="admonition danger">
+<p>hostname0에서 hostname1로 임의의 파일 push 하기.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Hint</p>
+<p>PUSH METHOD  <br />
+X-Hyper-Push-Destination: hostname1  <br />
+요청 하기</p>
+</div>
+<h2 id="2">과제2</h2>
+<div class="admonition danger">
+<p>동기화가 되어 있는 상태에서 hostname2의 임의의 파일을 삭제한다.  <br />
+그리고 동기화 상태를 확인하고 동기화가 되어 있지 않거나 누락된 파일이 존재하는 peer를 검색하여
+해당 파일을 push 하기.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Hint</p>
+<p>FIND METHOD  <br />
+recursive query  <br />
+로 요청하여 동기화 상태 분석  <br />
+PUSH METHOD  <br />
+X-Hyper-Push-Destination: hostname1      <br />
+요청 하기</p>
+</div>
+<hr />
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

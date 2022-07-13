@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Glossary - HyperCluster</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Glossary";
+        var mkdocs_page_input_path = "glossary.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> HyperCluster
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intro/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../keyconc/">Key Concepts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../guides/">User Guides</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../guides/api-syntax/">Syntax</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guides/api-v0.6.0.0/">Version 0.6.0.0</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guides/api-v0.6.1.0/">Version 0.6.1.0</a>
+                  </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Glossary</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#lead-peer">Lead Peer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#base-peer">Base Peer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sync-vs-push">SYNC vs PUSH</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../explorer/">Explorer</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../release-notes/">Release notes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tutorials/">Tutorials</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">HyperCluster</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Glossary</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="_1">용어 사전</h1>
+<hr />
+<h2 id="lead-peer">Lead Peer</h2>
+<p>사용자가 <code>Cluster</code>를 사용하기 위해 연결한 <code>Peer</code>.</p>
+<p>사용자가 Clustering 명령 <strong><em>Lead Peer</em></strong>에게 요청하면 사용자가 요청한 <code>cluster</code>에 참여한 <code>peer</code>에게
+<strong><em>Lead Peer</em></strong>가  수행 명령을 전달 하고 수집하여 사용자에게 응답합니다.</p>
+<hr />
+<h2 id="base-peer">Base Peer</h2>
+<p>사용자가 <code>SYNC</code> 또는 <code>PUSH</code> 명령을 전달하고 결과를 수집 집계하기 위해 연결한 <code>peer</code>. </p>
+<p>사용자가 <code>SYNC</code> 명령을 <strong><em>Lead Peer</em></strong>에게 요청하면 <strong><em>Lead Peer</em></strong>는 <strong><em>Base Peer</em></strong>로 임시 전환 되며 사용자가 요청한 <code>cluster</code>에 첨여 한 <code>Peer</code>중에서 임시 <strong><em>Lead Peer</em></strong>를 선출 하여 <strong><em>Base Peer</em></strong>와 통신을 하게 됩니다.
+<strong><em>Base Peer</em></strong>에 있는 Content를 임시 <strong><em>Lead Peer</em></strong>에게 전송하여 <code>cluster</code>에 참여한 다른 모든 <code>peer</code>에게도 전달이 가능하도록 합니다.</p>
+<hr />
+<h2 id="sync-vs-push">SYNC vs PUSH</h2>
+<table>
+<thead>
+<tr>
+<th align="center">내용</th>
+<th align="center">SYNC</th>
+<th align="center">PUSH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">대상</td>
+<td align="center"><strong><em>cluster에 참여한 모든 peer</em></strong></td>
+<td align="center"><strong><em>cluster에 참여한 단일 peer</em></strong></td>
+</tr>
+<tr>
+<td align="center">사용 목적</td>
+<td align="center"><strong><em>전체 동기화</em></strong></td>
+<td align="center"><strong><em>부분 동기화</em></strong></td>
+</tr>
+<tr>
+<td align="center">Header 추가</td>
+<td align="center">없음</td>
+<td align="center"><strong><em>X-Hyper-Push-Destination</em></strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>FIND?recursive</code> 명령으로 동기화 상태를 분석 후 특정 peer에 파일이 누락 되었거나, 동기화가 되어 있지 않은 경우
+<strong><em>PUSH</em></strong>를 사용합니다.</li>
+</ul>
+<hr />
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../guides/api-v0.6.1.0/" class="btn btn-neutral float-left" title="Version 0.6.1.0"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../explorer/" class="btn btn-neutral float-right" title="Explorer">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../guides/api-v0.6.1.0/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../explorer/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
